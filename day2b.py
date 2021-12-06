@@ -5,7 +5,7 @@ class Submarine:
     depth = 0
     aim = 0
 
-    def action(self, action, step):
+    def advance(self, action, step):
         if "forward" == action:
             self.position += step
             self.depth += self.aim * step
@@ -17,7 +17,7 @@ class Submarine:
 with open("day2.txt") as file:
     sub = Submarine()
     for line in [line for line in file.readlines() if line.strip()]:
-        match = re.match(r'^(up|down|forward)\s+(\d+)\s*$', line)
-        sub.action(match.group(1), int(match.group(2)))
+        action, step = re.match(r'^(up|down|forward)\s+(\d+)\s*$', line).groups()
+        sub.advance(action, int(step))
 
     print sub.position * sub.depth

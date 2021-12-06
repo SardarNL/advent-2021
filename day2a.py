@@ -8,11 +8,11 @@ actions = {
     "down": lambda step: (0, step)
 }
 
-def action(line):
-    match = re.match(r'^(up|down|forward)\s+(\d+)\s*$', line)
-    return actions[match.group(1)](int(match.group(2)))
+def advance(line):
+    action, step = re.match(r'^(up|down|forward)\s+(\d+)\s*$', line).groups()
+    return actions[action](int(step))
 
 with open("day2.txt") as file:
-    course = [action(line) for line in file.readlines() if line.strip()]
+    course = [advance(line) for line in file.readlines() if line.strip()]
     pos, depth = reduce(lambda (a, b), (c, d): (a + c, b + d), course)
     print pos * depth
